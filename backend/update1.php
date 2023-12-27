@@ -13,21 +13,13 @@ class HobbyUpdater
     {
         $query = "UPDATE category SET hobbie=? WHERE hobbie=? AND user_id=?";
 
-        $stmt = mysqli_prepare($this->con, $query);
+        $stmt = $this->con->executePreparedStatement($query, 'sss', $newDetails, $oldHobbie, $newUserId);
 
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "sss", $newDetails, $oldHobbie, $newUserId);
-            $success = mysqli_stmt_execute($stmt);
+            $lastInsertId = $stmt->insert_id;
 
-          if($success){
-            return true;
-          } else {
-            echo "Error: " . mysqli_error($this->con);
-            return false;
-        }
-
+    return $lastInsertId;
         } else {
-        
             return false;
         }
     }
@@ -43,7 +35,7 @@ if (isset($_POST['submit'])) {
     $hobbyUpdater = new HobbyUpdater($con);
     $updateSuccess = $hobbyUpdater->updateHobby($newUserId, $oldHobbie, $newDetails);
 
-    if ($updateSuccess) {
+    if ($updateSuccess !== false) {
         header("location: http://localhost/project1/details/home.php");
         exit();
     }

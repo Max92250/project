@@ -24,7 +24,10 @@ class HobbyViewer
             ORDER BY list.users_id
             LIMIT $startFrom, $perPageRecord";
 
-        $result = mysqli_query($this->con, $query);
+        $stmt = $this->con->getMysqli()->prepare($query);
+        if ($stmt) {
+        $stmt->execute();
+        $result = $stmt->get_result();
         $organizedData = [];
 
         while ($row = $result->fetch_assoc()) {
@@ -37,6 +40,7 @@ class HobbyViewer
         }
 
         return $organizedData;
+    }
     }
 }
 
@@ -144,8 +148,13 @@ include "form.php";
     <div class="pagination">
                 <?php
 $query = "SELECT COUNT( DISTINCT list.users_id) FROM list";
-                $rs_result = mysqli_query($con, $query);
-                $row = mysqli_fetch_row($rs_result);
+$stmt = $con->getMysqli()->prepare($query);
+if ($stmt) {
+$stmt->execute();
+$result = $stmt->get_result();
+    
+              
+            $row = mysqli_fetch_row($result);
                 $total_records = $row[0];
 
                 $total_pages = ceil($total_records / $perPageRecord);
@@ -165,6 +174,7 @@ $query = "SELECT COUNT( DISTINCT list.users_id) FROM list";
                 if ($page < $total_pages) {
                     echo "<a href='home.php?page=" . ($page + 1) . "'> Next </a>";
                 }
+}
                 ?>
             </div>
             </div>

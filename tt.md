@@ -14,9 +14,7 @@ class DatabaseConnection {
             die("Connection failed: " . $this->con->connect_error);
         }
     }
-    public function getMysqli() {
-        return $this->con;
-    }
+
 
     public function executePreparedStatement($sql, $types, ...$params) {
         $stmt = $this->con->prepare($sql);
@@ -43,8 +41,6 @@ class DatabaseConnection {
 }
 
 $con = new DatabaseConnection("localhost", "root", "", "ping");
-$mysqli = $con->getMysqli();
-
-
+return $con;
 
 ?>

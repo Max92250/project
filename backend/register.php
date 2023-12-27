@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 include "db.php";
 
@@ -20,10 +19,10 @@ class Registration {
 
     private function isUsernameTaken($username) {
         $sql = "SELECT * FROM MyGuests WHERE firstname = ?";
-        $stmt = mysqli_prepare($this->con, $sql);
-        mysqli_stmt_bind_param($stmt, 's', $username);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
+        $stmt = $this->con->executePreparedStatement($sql, 's', $username);
+  
+        $result = $stmt->get_result();
+
 
         return mysqli_num_rows($result) > 0;
     }
@@ -31,15 +30,9 @@ class Registration {
     private function insertUserIntoDatabase($username, $email, $password) {
         $hashedPassword = md5($password);
         $sql = "INSERT INTO MyGuests (firstname, email, password) VALUES (?, ?, ?)";
-        $stmt = mysqli_prepare($this->con, $sql);
-        mysqli_stmt_bind_param($stmt, 'sss', $username, $email, $hashedPassword);
-        $result = mysqli_stmt_execute($stmt);
-
-        if ($result) {
-            return ['status' => 'success'];
-        } else {
-            return ['status' => 'error', 'message' => 'Registration failed'];
-        }
+        $stmt = $this->con->executePreparedStatement($sql, 'sss', $username, $email, $hashedPassword);
+       
+        return $stmt->insert_id;
     }
 }
 
@@ -51,7 +44,7 @@ if (isset($_POST['register'])) {
     $registration = new Registration($con);
     $registrationResult = $registration->registerUser($username, $email, $password);
 
-    if ($registrationResult['status'] === 'success') {
+    if (!(is_array($registrationResult))) {
         header("location: http://localhost//project1/login.php");
         exit();
     } else {

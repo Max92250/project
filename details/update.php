@@ -1,4 +1,5 @@
 <?php
+// update.php
 
 include "../backend/db.php";
 
@@ -26,9 +27,16 @@ class HobbyUpdater
 
     private function fetchHobbyDetails()
     {
-        $query = "SELECT * FROM category WHERE hobbie = '$this->hobbie'";
-        $result = mysqli_query($this->con, $query) or die(mysqli_error($this->con));
-        $this->row = mysqli_fetch_assoc($result);
+        $query = "SELECT * FROM category WHERE hobbie = ?";
+        $stmt = $this->con->executePreparedStatement($query, 's', $this->hobbie);
+
+        $result = $stmt->get_result();
+
+        if ($result) {
+            $this->row = $result->fetch_assoc();
+        } else {
+            die("Error fetching hobby details: " . $stmt->error);
+        }
     }
 
     public function renderForm()
@@ -40,10 +48,9 @@ class HobbyUpdater
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
+            <title>Update Hobby Form</title>
             
             <link rel="stylesheet" type="text/css" href="../styles/update.css" />
-        
         </head>
         
         <body>

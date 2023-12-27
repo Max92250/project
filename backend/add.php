@@ -15,19 +15,15 @@ class ListAdder
         $query = "INSERT INTO list (details, date_posted, time_posted) 
         VALUES (?, ?, ?)";
 
-        $stmt = mysqli_prepare($this->con, $query);
-        if ($stmt) {
-            mysqli_stmt_bind_param($stmt, 'sss', $details, $date, $time);
-            $result = mysqli_stmt_execute($stmt);
-            
-            if ($result) {
-                $lastInsertId = mysqli_insert_id($this->con);
-                mysqli_stmt_close($stmt);
-                return $lastInsertId;
-            }
-            return false;
-        }
-        return false;
+$stmt = $this->con->executePreparedStatement($query, 'sss', $details, $date, $time);
+
+if ($stmt) {
+    $lastInsertId = $stmt->insert_id;
+
+    return $lastInsertId;
+}
+
+return false;
     }
 }
 
