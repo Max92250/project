@@ -20,9 +20,9 @@
 
 <body>
 
-    <nav class="navbar navbar-light fixed-top justify-content-between" style="background-color: #e3f2fd;">
+    <nav class="navbar  fixed-top justify-content-between" >
 
-        <div class="lin">
+        <div>
 
             <span> &nbsp; &nbsp;Welcome to the Home Page, <?php echo htmlspecialchars($customSessionHandler->getUser()); ?>!
             &nbsp; &nbsp;

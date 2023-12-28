@@ -3,7 +3,7 @@
 
 include "../classes/home.php";
 include "../classes/db.php";
- include 'session.php';
+ include '../classes/session.php';
 $hobbyViewer = new HobbyViewer($con);
 
 

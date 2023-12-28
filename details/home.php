@@ -91,6 +91,10 @@ include "form.php";
             window.location.assign("../backend/delete.php?id=" + id);
         }
     }
+    
+
+  
+
     </script>
 </body>
 

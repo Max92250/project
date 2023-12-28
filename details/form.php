@@ -7,7 +7,7 @@
 </head>
 <body>
     <div  class="pong">
-<a href="logout.php"><i class="fa fa-sign-out" style="font-size:30px;color:red"></i>
+<a href="../backend/logout.php"><i class="fa fa-sign-out" style="font-size:30px;color:red"></i>
 </a>
 </div>
 <form   class="ki"  action="../backend/add.php" method="POST">
