@@ -11,7 +11,7 @@ class DatabaseConnection {
         $this->con = new mysqli($servername, $username, $password, $db);
 
         if ($this->con->connect_error) {
-            die("Connection failed: " . $this->con->connect_error);
+             return $this->con->connect_error;
         }
     }
     public function getMysqli() {
@@ -22,7 +22,7 @@ class DatabaseConnection {
         $stmt = $this->con->prepare($sql);
 
         if (!$stmt) {
-            die("Error in prepared statement: " . $this->con->error);
+            return $this->con->error;
         }
      
         $stmt->bind_param($types, ...$params);
@@ -30,21 +30,42 @@ class DatabaseConnection {
         $result = $stmt->execute();
 
         if (!$result) {
-            die("Error executing statement: " . $stmt->error);
+            return  $stmt->error;
         }
+        $result = $stmt->get_result();
+        
+    if ($result === false) {
+        return ['status' => 'error', 'message' => 'Failed to get result.'];
+    }
 
-        return $stmt;
+
+
+        return $result;
+    }
+   
+
+    public function checkIfRowsExist($stmt) {
+      
+        return mysqli_num_rows($stmt) > 0;
+    }
+
+    public function fetch_assoc($stmt) {
+      
+        return  $stmt->fetch_assoc();;
+    }
+    public function fetch_id($stmt) {
+      
+        return  $stmt->insert_id;
     }
     
     public function closeConnection() {
         
-        $this->con->close();
+        return $this->con->close();
     }
 }
 
 $con = new DatabaseConnection("localhost", "root", "", "ping");
+
 $mysqli = $con->getMysqli();
-
-
 
 ?>

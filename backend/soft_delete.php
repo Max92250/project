@@ -12,18 +12,13 @@ class HobbyDeleter
     public function deleteHobby($userId, $hobby)
     {
         $sql = "UPDATE category SET is_deleted = 1 WHERE user_id = ? AND hobbie = ?";
-        
-        $stmt = mysqli_prepare($this->con, $sql);
+        $stmt = $this->con->executePreparedStatement($sql, 'ss', $userId,$hobby);
 
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "ss", $userId, $hobby);
-            $success = mysqli_stmt_execute($stmt);
-
-            mysqli_stmt_close($stmt);
-
+        
             return true;
         } else {
-            echo "Error: " . mysqli_error($this->con);
+           
             return false;
         }
     }

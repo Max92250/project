@@ -11,20 +11,15 @@ class ListDeleter
 
     public function deleteList($userId)
     {
-        $stmt = mysqli_prepare($this->con, "DELETE FROM list WHERE users_id = ?");
-        
-        if (!$stmt) {
-        
-            return false;
-        }
+        $categorySql = "DELETE FROM category WHERE user_id = ?";
+        $categoryStmt = $this->con->executePreparedStatement($categorySql, 'i', $userId);
 
-        mysqli_stmt_bind_param($stmt, "s", $userId);
-        $result = mysqli_stmt_execute($stmt);
+        $listSql = "DELETE FROM list WHERE users_id = ?";
+        $listStmt = $this->con->executePreparedStatement($listSql, 'i', $userId);
 
-        if ($result) {
+        if ($categoryStmt && $listStmt) {
             return true;
         } else {
-          
             return false;
         }
     }
