@@ -26,6 +26,6 @@ class Registration {
         $sql = "INSERT INTO MyGuests (firstname, email, password) VALUES (?, ?, ?)";
         $stmt = $this->con->executePreparedStatement($sql, 'sss', $username, $email, $hashedPassword);
        
-        return $stmt->insert_id;
+        return $this->con->fetch_id($stmt);
     }
 }

@@ -2,7 +2,7 @@
 
 
 include "../classes/home.php";
-include "db.php";
+include "../classes/db.php";
  include 'session.php';
 $hobbyViewer = new HobbyViewer($con);
 

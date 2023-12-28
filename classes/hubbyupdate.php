@@ -16,9 +16,8 @@ class HobbyUpdater
         $stmt = $this->con->executePreparedStatement($query, 'sss', $newDetails, $oldHobbie, $newUserId);
 
         if ($stmt) {
-            $lastInsertId = $stmt->insert_id;
-
-    return $lastInsertId;
+            return $this->con->fetch_id($stmt);
+           
         } else {
             return false;
         }

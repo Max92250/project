@@ -25,7 +25,10 @@ class DatabaseConnection {
             return $this->con->error;
         }
      
-        $stmt->bind_param($types, ...$params);
+        if (!empty($types)) {
+            $stmt->bind_param($types, ...$params);
+        }
+     
 
         $result = $stmt->execute();
 
@@ -39,23 +42,22 @@ class DatabaseConnection {
     }
 
 
-
         return $result;
     }
    
 
-    public function checkIfRowsExist($stmt) {
+    public function checkIfRowsExist($result) {
       
-        return mysqli_num_rows($stmt) > 0;
+        return mysqli_num_rows($result) > 0;
     }
 
-    public function fetch_assoc($stmt) {
+    public function fetch_assoc($result) {
       
-        return  $stmt->fetch_assoc();;
+        return  $result->fetch_assoc();;
     }
-    public function fetch_id($stmt) {
+    public function fetch_id($result) {
       
-        return  $stmt->insert_id;
+        return  $result->insert_id;
     }
     
     public function closeConnection() {

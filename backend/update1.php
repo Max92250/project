@@ -2,7 +2,7 @@
 include "../classes/hubbyupdate.php";
 
 if (isset($_POST['submit'])) {
-    include "db.php";
+    include "../classes/db.php";
 
     $newUserId = $_POST['new'];
     $oldHobbie = $_POST['hobbie'];

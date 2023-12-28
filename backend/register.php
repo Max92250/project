@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "db.php";
+include "..classes/db.php";
 include "../classes/register.php";
 
 

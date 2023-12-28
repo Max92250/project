@@ -19,9 +19,7 @@ class ListAdder
 
         if ($stmt) 
         {
-            $lastInsertId = $stmt->insert_id;
-
-            return $lastInsertId;
+            return $this->con->fetch_id($stmt);
         }
 
         return false;

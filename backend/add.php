@@ -2,7 +2,7 @@
 
 include "../classes/form.php";
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    include("../backend/db.php");
+    include("../classes/db.php");
 
     $listAdder = new ListAdder($con);
 

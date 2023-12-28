@@ -16,7 +16,7 @@ class Authentication {
 
 
         if ($row && ($hashedPassword ==  $row['password'])) {
-            return $stmt->insert_id;
+            return $this->con->fetch_id($stmt);
         } else {
             return ['status' => 'error', 'message' => 'Incorrect username or password!'];
         }

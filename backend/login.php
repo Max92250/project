@@ -2,7 +2,7 @@
 <?php
 
 session_start();
-include "db.php";
+include "../classes/db.php";
 include "../classes/login.php";
 if (isset($_POST['submit'])) {
     $username = $_POST['username'];
