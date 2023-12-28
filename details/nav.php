@@ -11,10 +11,10 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
 
-    <link rel="stylesheet" type="text/css" href="styles/home.css" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" type="text/css" href="styles/home.css" />
+
     <title>Document</title>
 </head>
 
@@ -24,8 +24,10 @@
 
         <div class="lin">
 
-            <p>Welcome to the Home Page, <?php echo htmlspecialchars($customSessionHandler->getUser()); ?>!
-            </p>
+            <span> &nbsp; &nbsp;Welcome to the Home Page, <?php echo htmlspecialchars($customSessionHandler->getUser()); ?>!
+            &nbsp; &nbsp;
+            <span><a href="user.php" class='op' >User</a></span>
+</span>
 
         </div>
 
