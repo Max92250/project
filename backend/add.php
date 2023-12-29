@@ -1,10 +1,9 @@
 <?php
 
-include "../classes/form.php";
+include "../classes/include.php";
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    include("../classes/db.php");
+    
 
-    $listAdder = new ListAdder($con);
 
     $details = $_POST['details'];
 
