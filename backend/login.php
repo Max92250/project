@@ -1,14 +1,12 @@
 
 <?php
 
-session_start();
-include "../classes/db.php";
-include "../classes/login.php";
+
+include "../classes/include.php";
 if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-
-    $authentication = new Authentication($con);
+  
     $authenticationResult = $authentication->authenticateUser($username, $password);
 
     if (isset($authenticationResult['status']) && $authenticationResult['status'] === 'error') {

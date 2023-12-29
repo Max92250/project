@@ -1,15 +1,12 @@
 <?php
 session_start();
-include "..classes/db.php";
-include "../classes/register.php";
 
-
+include "../classes/include.php";
 if (isset($_POST['register'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $registration = new Registration($con);
     $registrationResult = $registration->registerUser($username, $email, $password);
 
     if (!(is_array($registrationResult))) {

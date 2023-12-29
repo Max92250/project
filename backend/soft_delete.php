@@ -1,14 +1,14 @@
 <?php
 
-include "../classes/db.php";
 
-include "../classes/soft_delete.php";
+
+include "../classes/include.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $userId = $_GET["ni"];
     $hobby = $_GET["hobby"];
 
-    $hobbyDeleter = new HobbyDeleter($con);
+    
     $deletionSuccess = $hobbyDeleter->deleteHobby($userId, $hobby);
 
     if ($deletionSuccess) {
