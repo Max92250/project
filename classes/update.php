@@ -13,7 +13,6 @@ class HobbyUpdater
         $this->con = $con;
         $this->initializeData();
     }
-
     private function initializeData()
     {
         if ($_SERVER['REQUEST_METHOD'] === "GET") {
@@ -22,7 +21,6 @@ class HobbyUpdater
             $this->fetchHobbyDetails();
         }
     }
-
     private function fetchHobbyDetails()
     {
         $query = "SELECT * FROM category WHERE hobbie = ?";
@@ -31,14 +29,11 @@ class HobbyUpdater
         $this->row = $this->con->fetch_assoc($stmt);
       
     }
-
     public function renderForm()
     {
         include '../details/update.php';
     }
 }
-
-
 $hobbyUpdater = new HobbyUpdater($con);
 $hobbyUpdater->renderForm();
 
