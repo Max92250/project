@@ -11,6 +11,10 @@ class Authentication {
         $hashedPassword = md5($password);
         $sql = "SELECT * FROM MyGuests WHERE firstname = ?";
         $stmt = $this->con->executePreparedStatement($sql, "s", $username);
+        if (is_array($stmt)) {
+            // Handle the error, for example:
+            return ['status' => 'error', 'message' => 'Failed to authenticate user.'];
+        }
 
         $row = $this->con->fetch_assoc($stmt);
 

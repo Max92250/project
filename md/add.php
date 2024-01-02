@@ -8,11 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $details = $_POST['details'];
 
 
-    $lastInsertId = $listAdder->addList($details);
-
+    $lastInsertId = $action->performAction('addList', $details);
     if ($lastInsertId !== false) {
     
-
         header("location: http://localhost/project1/details/home.php?id=$lastInsertId");
         exit();
     } else {

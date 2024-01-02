@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <form class="form" method="POST" action="../backend/update1.php">
+    <form class="form" method="POST" action="../backend/update.php">
         <div class="title">Welcome</div>
         <div class="subtitle">Let's Edit Your Hobby</div>
         <input type="hidden" name="new" value="<?php echo $this->ni; ?>" />

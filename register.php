@@ -26,7 +26,7 @@
             <div class="screen__content">
     
 
-                <form class="login" method="post" action="backend/register.php" enctype='multipart/form-data'>
+                <form class="login" method="post" action="backend/authenticate.php" enctype='multipart/form-data'>
 
                     <div class="lo">
                         <p class="lo">Registration Form</p>

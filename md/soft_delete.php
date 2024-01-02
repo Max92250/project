@@ -8,8 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $userId = $_GET["ni"];
     $hobby = $_GET["hobby"];
 
-    
-    $deletionSuccess = $hobbyDeleter->deleteHobby($userId, $hobby);
+
+    $deletionSuccess = $actionHandler->performAction('deleteHobby', $userId, $hobby);
 
     if ($deletionSuccess) {
         header("location: http://localhost/project1/details/home.php");

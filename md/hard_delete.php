@@ -1,14 +1,11 @@
+
 <?php
-
-
-include "../classes/db.php";
-
-include "../classes/hard_delete.php";
+include "../classes/include.php";
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $userId = $_GET["ni"];
     $hobbyId = $_GET["hobby_id"];
 
-    $deletionResult=$hobbyDeleter->deleteHobby($userId, $hobbyId);
+    $deletionResult = $actionHandler->performAction('hardDeleteHobby', $userId, $hobbyId);
     if ($deletionResult) {
         header("location: http://localhost/project1/details/home.php");
     } else {
@@ -19,4 +16,3 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 } else {
     echo "Invalid request method";
 }
-?>

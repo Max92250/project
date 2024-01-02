@@ -1,13 +1,14 @@
 <?php
-session_start();
 
 include "../classes/include.php";
+
 if (isset($_POST['register'])) {
+    $action = 'register';
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $registrationResult = $registration->registerUser($username, $email, $password);
+    $registrationResult = $userManagement->manageUser($action,$username, $email, $password);
 
     if (!(is_array($registrationResult))) {
         header("location: http://localhost//project1/login.php");

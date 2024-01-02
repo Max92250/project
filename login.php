@@ -44,7 +44,7 @@
 
 
             <div class="login-form">
-                <form action="backend/login.php" method="POST">
+                <form action="backend/authenticate.php" method="POST">
                 <?php
 session_start();
 

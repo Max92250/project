@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) {
     $newDetails = $_POST['details'];
 
     
-    $updateSuccess = $hobbyUpdater->updateHobby($newUserId, $oldHobbie, $newDetails);
+    $updateSuccess = $action->performAction('updateHobby',$newUserId, $oldHobbie, $newDetails);
 
     if ($updateSuccess !== false) {
         header("location: http://localhost/project1/details/home.php");

@@ -1,6 +1,6 @@
 <?php
 
-class HobbyDeleter
+class HardDeleter
 {
     private $con;
 
@@ -9,7 +9,7 @@ class HobbyDeleter
         $this->con = $con;
     }
 
-    public function deleteHobby($userId, $hobbyId)
+    public function HarddeleteHobby($userId, $hobbyId)
     {
         $sql = "DELETE FROM category WHERE user_id = ? AND hobby_id = ?";
         

@@ -59,7 +59,7 @@ include "form.php";
                 echo "<td>";
                 echo "<table>";
                 foreach ($data['hobbies'] as $hobbyId => $hobby) {
-                    $softDeleteLink = '../backend/soft_delete.php?hobby=' . $hobby . '&ni=' . $id;
+                    $softDeleteLink = '../backend/listdelete.php?hobby=' . $hobby . '&ni=' . $id;
 
                     echo "<tr><td><a class='op' href='$softDeleteLink'>soft delete</a></td></tr>";
                 }
@@ -68,7 +68,7 @@ include "form.php";
                 echo "<td>";
                 echo "<table>";
                 foreach ($data['hobbies'] as $hobbyId => $hobby) {
-                    $hardDeleteLink = '../backend/hard_delete.php?hobby_id=' . $hobbyId . '&ni=' . $id;
+                    $hardDeleteLink = '../backend/listdelete.php?hobby_id=' . $hobbyId . '&ni=' . $id;
 
                     echo "<tr >
                     <td><a class='op' href='$hardDeleteLink' >hard delete</a></td>
@@ -88,7 +88,7 @@ include "form.php";
     function myFunction(id) {
         var r = confirm("Are you sure you want to delete this record?");
         if (r == true) {
-            window.location.assign("../backend/delete.php?id=" + id);
+            window.location.assign("../backend/listdelete.php?id=" + id);
         }
     }
     

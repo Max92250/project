@@ -285,3 +285,92 @@ $result = $stmt->get_result();
 </body>
 
 </html>
+<?php
+
+class DatabaseConnection {
+    private $servername;
+    private $username;
+    private $password;
+    private $db;
+    private $con;
+
+    public function __construct($servername, $username, $password, $db) {
+        try {
+            $this->con = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
+            $this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
+    public function getMysqli() {
+        return $this->con;
+    }
+
+    public function executePreparedStatement($sql, $types, ...$params) {
+        $stmt = $this->con->prepare($sql);
+
+        if (!$stmt) {
+            return $this->con->error;
+        }
+     
+        foreach ($params as $key => &$value) {
+            $stmt->bindParam($key + 1, $value);
+        }
+
+        $result = $stmt->execute();
+
+        if (!$result) {
+            return  $stmt->error;
+        }
+       
+        
+    if ($result === false) {
+        return ['status' => 'error', 'message' => 'Failed to get result.'];
+    }
+
+
+      
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+   
+
+    public function checkIfRowsExist($stmt) {
+        return $stmt->rowCount() > 0;
+    }
+    public function fetch_assoc($stmt) {
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function fetch_id() {
+        return $this->con->lastInsertId();
+    }
+    public function closeConnection() {
+        
+        return $this->con=null;
+    }
+}
+
+$con = new DatabaseConnection("localhost", "root", "", "ping");
+
+$mysqli = $con->getMysqli();
+
+?>
+<?php
+
+
+include "../classes/include.php";
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $userId = $_GET["ni"];
+    $hobbyId = $_GET["hobby_id"];
+
+    $deletionResult = $actionHandler->performAction('HardDeleteHobby', $userId, $hobbyId);
+    if ($deletionResult) {
+        header("location: http://localhost/project1/details/home.php");
+    } else {
+        
+        echo "Error: Failed to delete hobby.";
+    }
+
+} else {
+    echo "Invalid request method";
+}
+?>

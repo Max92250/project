@@ -10,7 +10,7 @@
 <a href="../backend/logout.php"><i class="fa fa-sign-out" style="font-size:30px;color:red"></i>
 </a>
 </div>
-<form   class="ki"  action="../backend/add.php" method="POST">
+<form   class="ki"  action="../backend/update.php" method="POST">
             <div class="pp" > ADD LIST </div>
         <div class=" pp form-group row">
    

@@ -1,8 +1,9 @@
 <?php
 
 
-include "../classes/db.php";
-include "../classes/user.php";
 
-$myGuestsFetcher = new MyGuestsFetcher($con);
+include "../classes/include.php";
+
+
+
 $Data = $myGuestsFetcher->fetchMyGuestsData();

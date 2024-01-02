@@ -17,7 +17,10 @@ class Registration {
     private function isUsernameTaken($username) {
         $sql = "SELECT * FROM MyGuests WHERE firstname = ?";
         $stmt = $this->con->executePreparedStatement($sql, 's', $username);
-  
+        if (!$stmt) {
+            return false;
+        }
+    
         return $this->con->checkIfRowsExist($stmt);
     }
 

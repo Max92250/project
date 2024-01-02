@@ -7,7 +7,7 @@ class CustomSessionHandler
 
     public function __construct()
     {
-        session_start(); 
+       
         if ($this->isLoggedIn()) {
            
         } else {

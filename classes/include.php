@@ -1,25 +1,33 @@
 <?php
+session_start();
 
 
 
-include "form.php";
+spl_autoload_register(function ($class) {
+    $classPath = 'classes/' . $class . '.php';
+    if (file_exists($classPath)) {
+        include $classPath;
+    }
+});
+
+
 include("db.php");
 include "home.php";
-include "login.php";
-include("register.php");
+include("authenticate.php");
 include("session.php");
-include("soft_delete.php");
-include("hubbyupdate.php");
-include("hard_delete.php");
 
 
 
+include("user.php");
+include("listdelete.php");
+include("ActionHandler.php");
 
-$listAdder = new ListAdder($con);
-$authentication = new Authentication($con);
-$registration = new Registration($con);
+$action = new Action($con);
+
+
+$userManagement = new UserManagement($con);
+$actionHandler = new ActionHandler($con);
 $hobbyViewer = new HobbyViewer($con);
-$hobbyDeleter = new HobbyDeleter($con);
-$hobbyUpdater = new HobbyUpdater($con);
-$hobbyDeleter = new HobbyDeleter($con);
+
+$myGuestsFetcher = new MyGuestsFetcher($con);
 

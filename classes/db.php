@@ -5,69 +5,79 @@ class DatabaseConnection {
     private $username;
     private $password;
     private $db;
-    private $con;
+    private $pdo;
 
     public function __construct($servername, $username, $password, $db) {
-        $this->con = new mysqli($servername, $username, $password, $db);
-
-        if ($this->con->connect_error) {
-             return $this->con->connect_error;
+        try {
+            $this->pdo = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            return $this->errorResponse($e->getMessage());
         }
     }
-    public function getMysqli() {
-        return $this->con;
+
+    public function getPdo() {
+        return $this->pdo;
     }
 
     public function executePreparedStatement($sql, $types, ...$params) {
-        $stmt = $this->con->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
 
         if (!$stmt) {
-            return $this->con->error;
+            return $this->pdo->errorInfo();
         }
-     
+
         if (!empty($types)) {
-            $stmt->bind_param($types, ...$params);
+            foreach ($params as $key => &$value) {
+                $stmt->bindParam($key + 1, $value, $this->getType($types[$key]));
+            }
+        } else {
+            foreach ($params as $key => &$value) {
+                $stmt->bindValue($key + 1, $value);
+            }
         }
-     
 
         $result = $stmt->execute();
 
         if (!$result) {
-            return  $stmt->error;
+            return $stmt->errorInfo();
         }
-        $result = $stmt->get_result();
-        
-    if ($result === false) {
-        return ['status' => 'error', 'message' => 'Failed to get result.'];
+
+        return $stmt;
     }
 
+    private function getType($types) {
+        switch ($types) {
+            case 's':
+                return PDO::PARAM_STR;
+            case 'i':
+                return PDO::PARAM_INT;
+            default:
+                return PDO::PARAM_STR;
+        }
+    }
 
-        return $result;
-    }
-   
-
-    public function checkIfRowsExist($result) {
-      
-        return mysqli_num_rows($result) > 0;
+    public function checkIfRowsExist($stmt) {
+        return $stmt->rowCount() > 0;
     }
 
-    public function fetch_assoc($result) {
-      
-        return  $result->fetch_assoc();;
+    public function fetch_assoc($stmt) {
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    public function fetch_id($result) {
-      
-        return  $result->insert_id;
+
+    public function fetch_id() {
+        return $this->pdo->lastInsertId();
     }
-    
+
     public function closeConnection() {
-        
-        return $this->con->close();
+        $this->pdo = null;
     }
 }
 
 $con = new DatabaseConnection("localhost", "root", "", "ping");
 
-$mysqli = $con->getMysqli();
+$pdo = $con->getPdo();
+
+
 
 ?>
